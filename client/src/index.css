@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p,
+div {
+	font-family: 'Maven Pro', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Maven Pro', sans-serif;
+}
+
+@font-face {
+	font-family: 'Maven Pro';
+	src: url('./assets/fonts/Maven_Pro/static/MavenPro-Regular.ttf') format('truetype');
+	font-weight: 200;
+}
+
+@font-face {
+	font-family: 'Maven Pro';
+	src: url('./assets/fonts/Maven_Pro/static/MavenPro-Bold.ttf') format('truetype');
+	font-weight: 700;
+}
