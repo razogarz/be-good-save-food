@@ -19,6 +19,7 @@ export function InputForm() {
 				id="recipes"
 				required
 				onChange={(e) => setNumberOfRecipes(parseInt(e.target.value))}
+				inputProps={{ min: 1, max: 10 }}
 			/>
 			<Button endIcon={<SendIcon />} variant="contained" color="primary" className="relative m-3 p-3 right-0" type="submit">
 				Submit

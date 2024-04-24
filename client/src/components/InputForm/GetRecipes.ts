@@ -33,5 +33,6 @@ export async function GetRecipes(
 		return;
 	}
 
+	localStorage.setItem('recipes', JSON.stringify(response.data));
 	window.location.href = '/recipes';
 }
