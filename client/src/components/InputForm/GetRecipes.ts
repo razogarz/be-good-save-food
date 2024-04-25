@@ -7,7 +7,7 @@ export async function GetRecipes(
 ) {
 	event.preventDefault();
 	if(ingredients.length === 0){
-		alert('Please enter some ingredients');
+		alert('Please enter ANY ingredients');
 		return;
 	};
 
@@ -17,25 +17,18 @@ export async function GetRecipes(
 		numberOfRecipes,
 	};
 
-	const result = await axios.post(url, data)
+	axios.post(url, data)
 		.then((response) => {
-			return response;
+			if(response.data.length === 0){
+				alert("No recipes found. Enter more ingredients!");
+				return;
+			}
+			localStorage.setItem('recipes', JSON.stringify(response.data));
+			window.location.href = '/recipes';
+			return;
 		})
 		.catch((error) => {
-			return error;
+			alert(error.response.data.errors)
+			return;
 		});
-	const axiosResponse = result.response;
-
-	if(axiosResponse && axiosResponse.status !== 200){
-		alert(axiosResponse.data.errors);
-		return;
-	}
-
-	if(result.data.length === 0){
-		alert('Please enter some more ingredients');
-		return;
-	}
-
-	localStorage.setItem('recipes', JSON.stringify(result.data));
-	window.location.href = '/recipes';
 }
