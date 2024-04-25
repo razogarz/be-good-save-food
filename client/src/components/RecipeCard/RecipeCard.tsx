@@ -11,14 +11,19 @@ export function RecipeCard(
 ) {
 	const { suggestion, nutrition, readyIn, sourceUrl } = props;
 	return (
-		<Card key={suggestion.id} className="m-4 flex flex-col justify-between" style={{ width: 345 }}>
+		<Card key={suggestion.id} className="m-4 flex flex-col justify-between self-center" style={{ width: 345 }}>
 			<div>
 				<CardHeader title={suggestion.title} subheader={"Ready in " + readyIn + " minutes"}
 					sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
 				/>
 				<CardMedia
 					component="img"
-					height="194"
+					sx={{
+						backgroundSize: 'contain',
+						height: "200px",
+						width: "100%",
+						objectFit: 'fit',
+					}}
 					image={suggestion.image}
 					alt={suggestion.title}
 				/>

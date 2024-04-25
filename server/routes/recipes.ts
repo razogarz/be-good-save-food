@@ -9,7 +9,7 @@ const router = Router();
 router.post('/', ingredientsValidator, async (req: Request, res: Response) => {
 	const errorsValidating = validationResult(req);
 	if (!errorsValidating.isEmpty()) {
-		return res.status(400).json({ errors: errorsValidating.array() });
+		return res.status(400).json({ errors: "Invalid input data, check your list again (make sure products contain only roman letters)" });
 	}
 
 	const { ingredients, numberOfRecipes } = req.body;

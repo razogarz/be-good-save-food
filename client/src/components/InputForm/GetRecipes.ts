@@ -6,6 +6,10 @@ export async function GetRecipes(
 	numberOfRecipes: number
 ) {
 	event.preventDefault();
+	if(ingredients.length === 0){
+		alert('Please enter some ingredients');
+		return;
+	};
 
 	const url = `http://localhost:3000/recipes`;
 	const data = {
@@ -13,26 +17,25 @@ export async function GetRecipes(
 		numberOfRecipes,
 	};
 
-	const response = await axios.post(url, data)
+	const result = await axios.post(url, data)
 		.then((response) => {
-			console.log(response);
 			return response;
 		})
 		.catch((error) => {
-			console.error(error);
 			return error;
 		});
-	
-	if(response.status !== 200){
-		alert(response.data.errors[0].msg ?? 'An error occurred, please try again later');
+	const axiosResponse = result.response;
+
+	if(axiosResponse && axiosResponse.status !== 200){
+		alert(axiosResponse.data.errors);
 		return;
 	}
 
-	if(response.data.length === 0){
+	if(result.data.length === 0){
 		alert('Please enter some more ingredients');
 		return;
 	}
 
-	localStorage.setItem('recipes', JSON.stringify(response.data));
+	localStorage.setItem('recipes', JSON.stringify(result.data));
 	window.location.href = '/recipes';
 }

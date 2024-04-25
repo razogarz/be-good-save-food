@@ -9,7 +9,7 @@ export function RecipesListPage() {
 			<h1 className="text-2xl lg:text-5xl text-center italic p-3 m-3">
 				Recipes found for you:
 			</h1>
-			<div className="flex flex-wrap justify-center">
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 				{recipes?.map((_, index) => {
 					const suggestion = recipes[index].Suggestions;
 					const nutrition = recipes[index].Nutrition.nutrition;
@@ -26,7 +26,7 @@ export function RecipesListPage() {
 					)
 				})}
 			</div>
-		</div>
+		</div >
 	)
 };
 
