@@ -11,10 +11,10 @@ export function RecipeCard(
 ) {
 	const { suggestion, nutrition, readyIn, sourceUrl } = props;
 	return (
-		<Card key={suggestion.id} className="m-4 flex flex-col justify-between self-center" style={{ width: 345 }}>
+		<Card key={suggestion.id} className="m-4 flex flex-col justify-between self-center" style={{ width: 345, boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', border: '1px solid #e0e0e0' }}>
 			<div>
 				<CardHeader title={suggestion.title} subheader={"Ready in " + readyIn + " minutes"}
-					sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+					sx={{ overflow: 'scroll', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
 				/>
 				<CardMedia
 					component="img"
@@ -28,6 +28,10 @@ export function RecipeCard(
 					alt={suggestion.title}
 				/>
 				<CardContent
+					sx={{
+						overflow: 'scroll',
+						maxHeight: '150px',
+					}}
 				>
 					<div>
 						<div className="font-bold">Used Ingredients {"(" + suggestion.usedIngredientCount + ")"}:</div> {suggestion.usedIngredients.map(

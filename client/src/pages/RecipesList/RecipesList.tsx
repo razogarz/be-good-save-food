@@ -19,11 +19,11 @@ export function RecipesListPage() {
 				</h1>
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-				{recipes?.map((_, index) => {
-					const suggestion = recipes[index].Suggestions;
-					const nutrition = recipes[index].Nutrition.nutrition;
-					const readyIn = recipes[index].Nutrition.readyInMinutes;
-					const sourceUrl = recipes[index].Nutrition.sourceUrl;
+				{recipes?.map((recipe) => {
+					const suggestion = recipe.Suggestions;
+					const nutrition = recipe.Nutrition.nutrition;
+					const readyIn = recipe.Nutrition.readyInMinutes;
+					const sourceUrl = recipe.Nutrition.sourceUrl;
 
 					return (
 						<RecipeCard
