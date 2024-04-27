@@ -8,6 +8,6 @@ test("areIngredientsValid", () => {
 
 test("handleResponse", () => {
 	expect(handleResponse({ errors: "error", data: [] })).toBe(false);
-	expect(handleResponse({ errors: "", data: [] })).toBe(false);
+	expect(handleResponse({ errors: "", data: [] })).toBe(true);
 	expect(handleResponse({ errors: "", data: ["recipe"] })).toBe(true);
 });

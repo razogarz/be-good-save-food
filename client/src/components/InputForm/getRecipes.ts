@@ -6,7 +6,9 @@ export async function GetRecipes(
 	numberOfRecipes: number
 ) {
 	event.preventDefault();
-	areIngredientsValid(ingredients);
+	const result = areIngredientsValid(ingredients);
+	if(!result) return;
+	
 
 	const url = `http://localhost:3000/recipes`;
 	const data = {
@@ -22,7 +24,8 @@ export async function GetRecipes(
 			return error.response.data;
 		});
 
-	handleResponse(response);
+	console.log(response);
+		handleResponse(response);
 }
 
 export function areIngredientsValid(
@@ -36,18 +39,17 @@ export function areIngredientsValid(
 }
 
 export function handleResponse(
-	response: { errors: string, data: any[] }
+	response: any
 ): boolean {
 	if(response.errors){
 		alert(response.errors);
 		return false;
 	}
-
-	if(response.data.length === 0){
+	if(response.length === 0){
 		alert("No recipes found. Enter more ingredients!");
 		return false;
 	}
-	localStorage.setItem('recipes', JSON.stringify(response.data));
+	localStorage.setItem('recipes', JSON.stringify(response));
 	window.location.href = '/recipes';
 	return true;
 }
