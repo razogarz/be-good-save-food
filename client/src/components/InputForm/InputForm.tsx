@@ -1,12 +1,23 @@
 import { Input, Button } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListOfIngredients } from '../ListOfIngredients/ListOfIngredients';
 import { GetRecipes } from "./getRecipes";
+import axios from "axios";
 
 export function InputForm() {
 	const [ingredients, setIngredients] = useState<string[]>([]);
 	const [numberOfRecipes, setNumberOfRecipes] = useState<number>(0);
+
+	useEffect(() => {
+		axios.get("http://localhost:8000/recipes/")
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+	}, [])
 
 	return (
 		<form className="flex flex-col items-end w-1/2 m-auto" onSubmit={(event) => GetRecipes(event, ingredients, numberOfRecipes)}>

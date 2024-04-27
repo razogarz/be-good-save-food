@@ -10,7 +10,7 @@ export async function GetRecipes(
 	if(!result) return;
 	
 
-	const url = `http://localhost:3000/recipes`;
+	const url = `http://localhost:8000/recipes/`;
 	const data = {
 		ingredients,
 		numberOfRecipes,
@@ -18,14 +18,14 @@ export async function GetRecipes(
 
 	const response = await axios.post(url, data)
 		.then((response) => {
-			return response.data;
+			return response.data.data;
 		})
 		.catch((error) => {
-			return error.response.data;
+			return error.response.data.data;
 		});
 
 	console.log(response);
-		handleResponse(response);
+	handleResponse(response);
 }
 
 export function areIngredientsValid(
