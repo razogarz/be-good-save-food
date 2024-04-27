@@ -16,3 +16,5 @@ This app was designed to help you save food while recommending healthy meals rec
 3. Run `npm run dev` to start the server
 
 And you are ready to go! Open your browser and go to `http://localhost:5173/` to start using the app.
+
+##### You can also run tests for the client with `npm run test`

@@ -1,6 +1,6 @@
 import { Input, Button } from "@mui/material";
 import { Dispatch, useState, SetStateAction } from "react";
-import { AddToList } from "./AddToList";
+import { AddToList } from "./addToList";
 
 export function ListOfIngredients(
 	props: {

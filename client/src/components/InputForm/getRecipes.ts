@@ -6,10 +6,7 @@ export async function GetRecipes(
 	numberOfRecipes: number
 ) {
 	event.preventDefault();
-	if(ingredients.length === 0){
-		alert('Please enter ANY ingredients');
-		return;
-	};
+	areIngredientsValid(ingredients);
 
 	const url = `http://localhost:3000/recipes`;
 	const data = {
@@ -17,18 +14,40 @@ export async function GetRecipes(
 		numberOfRecipes,
 	};
 
-	axios.post(url, data)
+	const response = await axios.post(url, data)
 		.then((response) => {
-			if(response.data.length === 0){
-				alert("No recipes found. Enter more ingredients!");
-				return;
-			}
-			localStorage.setItem('recipes', JSON.stringify(response.data));
-			window.location.href = '/recipes';
-			return;
+			return response.data;
 		})
 		.catch((error) => {
-			alert(error.response.data.errors)
-			return;
+			return error.response.data;
 		});
+
+	handleResponse(response);
+}
+
+export function areIngredientsValid(
+	ingredients: string[],
+ ):boolean {
+	if(ingredients.length === 0){
+		alert('Please enter ANY ingredients');
+		return false;
+	};
+	return true;
+}
+
+export function handleResponse(
+	response: { errors: string, data: any[] }
+): boolean {
+	if(response.errors){
+		alert(response.errors);
+		return false;
+	}
+
+	if(response.data.length === 0){
+		alert("No recipes found. Enter more ingredients!");
+		return false;
+	}
+	localStorage.setItem('recipes', JSON.stringify(response.data));
+	window.location.href = '/recipes';
+	return true;
 }
