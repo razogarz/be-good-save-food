@@ -21,6 +21,11 @@ export function ListOfIngredients(
 					fullWidth
 					value={inputVal}
 					onChange={(e) => setInputVal(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							AddToList(inputVal, setIngredients, setInputVal);
+						}
+					}}
 				/>
 				<Button
 					variant="contained"
@@ -33,7 +38,8 @@ export function ListOfIngredients(
 					Add
 				</Button>
 			</div>
-			<div className="my-3 h-48 overflow-scroll px-2 bg-slate-100 rounded-md">
+			<label htmlFor="ingredients-list" className="self-start mb-2">Your list:</label>
+			<div className="my-3 h-48 overflow-scroll px-2 bg-slate-100 rounded-md" id="ingredients-list">
 				{ingredients?.map((ingredient, index) => {
 					return (
 						<div key={index} className="flex justify-between items-center p-2 bg-gray-200 my-2 rounded-lg">
