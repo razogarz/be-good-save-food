@@ -17,14 +17,13 @@ export async function GetRecipes(
 	};
 
 	const response = await axios.post(url, data)
-		.then((response) => {
-			return response.data.data;
-		})
-		.catch((error) => {
-			return error.response.data.data;
-		});
+    .then((response) => {
+        return response.data.data;
+    })
+    .catch((error) => {
+        return error.response.data;
+    });
 
-	console.log(response);
 	handleResponse(response);
 }
 
@@ -50,6 +49,6 @@ export function handleResponse(
 		return false;
 	}
 	localStorage.setItem('recipes', JSON.stringify(response));
-	window.location.href = '/recipes';
+	// window.location.href = '/recipes';
 	return true;
 }

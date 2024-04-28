@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from .validators import validateIngredients
+from dotenv import load_dotenv
+import os
 
 @csrf_exempt
 def getRecipes(request):
@@ -15,8 +17,14 @@ def getRecipes(request):
 		byte_body = request.body
 		str_body = byte_body.decode('utf-8')
 		body = eval(str_body)
+
+		areIngredientsValid = validateIngredients(body)
 		
-		API_KEY = "b208f380b3f14a93adf507c2b28427d4"
+		if areIngredientsValid.status_code != 200:
+			return areIngredientsValid
+		
+		load_dotenv()
+		API_KEY = os.getenv("API_KEY")
 
 		ingredients = body["ingredients"]
 		numberOfRecipes = body["numberOfRecipes"]
