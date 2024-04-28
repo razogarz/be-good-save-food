@@ -49,6 +49,6 @@ export function handleResponse(
 		return false;
 	}
 	localStorage.setItem('recipes', JSON.stringify(response));
-	// window.location.href = '/recipes';
+	window.location.href = '/recipes';
 	return true;
 }

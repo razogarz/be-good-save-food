@@ -8,7 +8,6 @@ from .validators import validateIngredients
 from dotenv import load_dotenv
 import os
 
-@csrf_exempt
 def getRecipes(request):
 	if request.method == 'GET':
 		return HttpResponse("Hello, world. You're at the recipes getRecipes.")
