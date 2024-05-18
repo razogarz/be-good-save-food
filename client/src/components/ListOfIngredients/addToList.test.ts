@@ -18,7 +18,7 @@ test("addToList", () => {
 	const { result } = renderHook(() => useState<string>('onion'));
 	const [inputVal, setInputVal] = result.current;
 	const { result: result2 } = renderHook(() => useState<string[]>([]));
-	const [ingredients, setIngredients] = result2.current;
+	const [, setIngredients] = result2.current;
 
 	const addResult = AddToList(inputVal, setIngredients, setInputVal);
 	expect(addResult).toEqual(['onion']);

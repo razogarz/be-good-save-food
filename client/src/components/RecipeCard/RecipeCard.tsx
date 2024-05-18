@@ -11,8 +11,8 @@ export function RecipeCard(
 ) {
 	const { suggestion, nutrition, readyIn, sourceUrl } = props;
 	return (
-		<Card key={suggestion.id} className="m-4 flex flex-col justify-between self-center" style={{ width: 345, boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', border: '1px solid #e0e0e0' }}>
-			<div>
+		<Card className="m-4 flex flex-col justify-between self-center" style={{ width: 345, boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', border: '1px solid #e0e0e0' }}>
+			<div key={suggestion.id}>
 				<CardHeader
 					title={suggestion.title} subheader={"Ready in " + readyIn + " minutes"}
 					titleTypographyProps={{ fontFamily: 'Playfair Display', fontSize: '1.5rem' }}

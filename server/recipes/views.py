@@ -1,59 +1,30 @@
-import requests
-
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.http import HttpResponse
+from .utils.functions import get_data_from_spoonful
 from django.http import JsonResponse
-from .validators import validateIngredients
 from dotenv import load_dotenv
 import os
 
-def getRecipes(request):
-	if request.method == 'GET':
-		return HttpResponse("Hello, world. You're at the recipes getRecipes.")
-	
-	if request.method == 'POST':
-		byte_body = request.body
-		str_body = byte_body.decode('utf-8')
-		body = eval(str_body)
 
-		areIngredientsValid = validateIngredients(body)
-		
-		if areIngredientsValid.status_code != 200:
-			return areIngredientsValid
-		
-		load_dotenv()
-		API_KEY = os.getenv("API_KEY")
+def get_recipes(request):
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Route not found'}, status=404)
 
-		ingredients = body["ingredients"]
-		numberOfRecipes = body["numberOfRecipes"]
-		ingredientsString = ",".join(ingredients)
+    ingredients = request.GET.get('ingredients')
+    number_of_recipes = request.GET.get('number')
 
-		recipesMatchingUrl = f"https://api.spoonacular.com/recipes/findByIngredients?ingredients={ingredientsString}&number={numberOfRecipes}&apiKey={API_KEY}"
-		# make a request to the API
-		recipesMatching = requests.get(recipesMatchingUrl, params=request.GET)
-		recipesMatchingJson = recipesMatching.json()
+    load_dotenv()
+    api_key = os.getenv("API_KEY")
+    api_url = os.getenv("API_URL")
 
-		itemsids = []
-		for recipe in recipesMatchingJson:
-			itemsids.append(recipe["id"])
-		itemsIdsString = ",".join(map(str, itemsids))
-		nutritionInfoUrl = f"https://api.spoonacular.com/recipes/informationBulk?ids={itemsIdsString}&includeNutrition=true&apiKey={API_KEY}"
-		nutritionInfo = requests.get(nutritionInfoUrl)
-		nutritionInfoJson = nutritionInfo.json()
+    recipes_matching_json, nutrition_info_json = get_data_from_spoonful(ingredients, number_of_recipes, api_key, api_url)
+
+    response_data = []
+    for index in range(len(nutrition_info_json)):
+            dictionary = {"Suggestions": recipes_matching_json[index], "Nutrition": nutrition_info_json[index]}
+            response_data.append(dictionary)
+
+    return JsonResponse({'data': response_data})
 
 
-		# # return JsonResponse(nutritionInfoJson)
-		responseData = []
-		for index in range(len(nutritionInfoJson)):
-				dictionary = {}
-				dictionary["Suggestions"] = recipesMatchingJson[index]
-				dictionary["Nutrition"] = nutritionInfoJson[index]
-				responseData.append(dictionary)
-
-		return JsonResponse({'data': responseData})
-
-		# return JsonResponse(responseData)
 
 		
 

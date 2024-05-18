@@ -1,39 +1,41 @@
 import axios from 'axios';
 
 export async function GetRecipes(
-	event: React.FormEvent<HTMLFormElement>,
+	event: any,
 	ingredients: string[],
 	numberOfRecipes: number
 ) {
 	event.preventDefault();
-	const result = areIngredientsValid(ingredients);
+	const result = isDataValid(ingredients, numberOfRecipes);
 	if(!result) return;
-	
 
-	const url = `http://localhost:8000/recipes/`;
-	const data = {
-		ingredients,
-		numberOfRecipes,
-	};
+	const url = new URL(`http://localhost:8000/recipes/`);
+	url.searchParams.append('ingredients', ingredients.join(','));
+	url.searchParams.append('number', numberOfRecipes.toString());
 
-	const response = await axios.post(url, data)
-    .then((response) => {
-        return response.data.data;
-    })
-    .catch((error) => {
-        return error.response.data;
-    });
+	const response = await axios.get(url.toString())
+			.then((response) => {
+				return response.data.data;
+			})
+			.catch((error) => {
+				return error.response.data;
+			});
 
 	handleResponse(response);
 }
 
-export function areIngredientsValid(
+export function isDataValid(
 	ingredients: string[],
+	numberOfRecipes: number
  ):boolean {
 	if(ingredients.length === 0){
-		alert('Please enter ANY ingredients');
+		alert('Please enter ANY NUMBER of ingredients greater than 0');
 		return false;
-	};
+	}
+	if(numberOfRecipes < 1 || numberOfRecipes > 10){
+		alert('Please enter a number between 1 and 10');
+		return false;
+	}
 	return true;
 }
 

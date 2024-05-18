@@ -46,6 +46,7 @@ blur-md  w-full h-full
 								nutrition={nutrition}
 								readyIn={readyIn}
 								sourceUrl={sourceUrl}
+								key={suggestion.id}
 							/>
 						)
 					})}
